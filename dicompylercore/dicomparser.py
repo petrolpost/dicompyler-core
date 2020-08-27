@@ -12,6 +12,7 @@
 import logging
 import numpy as np
 try:
+    from pydicom import uid
     from pydicom.dicomio import read_file
     from pydicom.dataset import Dataset
     from pydicom.pixel_data_handlers.util import pixel_dtype
@@ -63,6 +64,7 @@ class DicomParser:
             self.pixel_array = self.get_pixel_array
         else:
             if "PixelData" in self.ds:
+                self.ds.file_meta.TransferSyntaxUID = uid.ImplicitVRLittleEndian
                 self.pixel_array = self.ds.pixel_array
 
 ######################## SOP Class and Instance Methods #######################
